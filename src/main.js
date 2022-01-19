@@ -305,7 +305,6 @@ const createDna = (_layers) => {
             flag = 1;
           }
         }
-        console.log(flag);
         if (flag == 1) {
           _layers.forEach((layer) => {
             if (layer.name == "mouth") {
@@ -329,10 +328,12 @@ const createDna = (_layers) => {
     }
   });
   if (randNum.length > 10) {
-    var num = randomIntGenerate();
-
-    let newrandom = randNum.filter(e => !e.includes(':GOLD TOKEN'));
-    randNum[randNum.indexOf(newrandom[newrandom.length - 1])] = normalArr[num];
+    let newrandom = [];
+    newrandom = randNum.filter(e => !e.includes(':GOLD TOKEN'));
+    console.log(randNum.slice(100));
+    if (newrandom.length == 4) randNum[randNum.indexOf(newrandom[newrandom.length - 1])] = normalArr[randomIntGenerate()];
+    console.log(randomIntGenerate());
+    // console.log(randNum.filter(e => !e.includes(':GOLD TOKEN') && e.includes('DIAMOND')));
   }
 
   return randNum.join(DNA_DELIMITER);
