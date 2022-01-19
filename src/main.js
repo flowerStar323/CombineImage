@@ -196,18 +196,18 @@ const drawElement = (_renderObject, _index, _layersLen) => {
   ctx.globalCompositeOperation = _renderObject.layer.blend;
   text.only
     ? addText(
-        `${_renderObject.layer.name}${text.spacer}${_renderObject.layer.selectedElement.name}`,
-        text.xGap,
-        text.yGap * (_index + 1),
-        text.size
-      )
+      `${_renderObject.layer.name}${text.spacer}${_renderObject.layer.selectedElement.name}`,
+      text.xGap,
+      text.yGap * (_index + 1),
+      text.size
+    )
     : ctx.drawImage(
-        _renderObject.loadedImage,
-        0,
-        0,
-        format.width,
-        format.height
-      );
+      _renderObject.loadedImage,
+      0,
+      0,
+      format.width,
+      format.height
+    );
 
   addAttributes(_renderObject);
 };
@@ -295,24 +295,32 @@ const createDna = (_layers) => {
           _layers.forEach((layer) => {
             if (layer.name == "mouth") {
               for (var j = 0; j < layer.elements.length; j++) {
-                if ((layer.elements[j].name = "NORMAL")) {
-                  // console.log("12345");
+                if (layer.elements[j].name = "NORMAL") {
+                  console.log("12345");
+                  randNum.push(
+                    `${layer.elements[i].id}:${layer.elements[i].filename}${layer.bypassDNA ? "?bypassDNA=true" : ""
+                    }`
+                  );
                 }
               }
             }
           });
+        } else {
+          randNum.push(
+            `${layer.elements[i].id}:${layer.elements[i].filename}${layer.bypassDNA ? "?bypassDNA=true" : ""
+            }`
+          );
         }
-        randNum.push(
-          `${layer.elements[i].id}:${layer.elements[i].filename}${
-            layer.bypassDNA ? "?bypassDNA=true" : ""
-          }`
-        );
+        // randNum.push(
+        //   `${layer.elements[i].id}:${layer.elements[i].filename}${layer.bypassDNA ? "?bypassDNA=true" : ""
+        //   }`
+        // );
         return randNum;
       }
     }
   });
 
-  return randNum.join(DNA_DELIMITER);
+  return randNum.join(DNA_DELIMITER); ``
 };
 
 const writeMetaData = (_data) => {
@@ -323,8 +331,8 @@ const saveMetaDataSingleFile = (_editionCount) => {
   let metadata = metadataList.find((meta) => meta.edition == _editionCount);
   debugLogs
     ? console.log(
-        `Writing metadata for ${_editionCount}: ${JSON.stringify(metadata)}`
-      )
+      `Writing metadata for ${_editionCount}: ${JSON.stringify(metadata)}`
+    )
     : null;
   fs.writeFileSync(
     `${buildDir}/json/${_editionCount}.json`,
@@ -372,7 +380,7 @@ const startCreating = async () => {
       editionCount <= layerConfigurations[layerConfigIndex].growEditionSizeTo
     ) {
       let newDna = createDna(layers);
-      console.log(222, newDna);
+      // console.log(222, newDna);
 
       if (isDnaUnique(dnaList, newDna)) {
         let results = constructLayerToDna(newDna, layers);
@@ -418,11 +426,11 @@ const startCreating = async () => {
           saveImage(abstractedIndexes[0]);
           addMetadata(newDna, abstractedIndexes[0]);
           saveMetaDataSingleFile(abstractedIndexes[0]);
-          console.log(
-            `Created edition: ${abstractedIndexes[0]}, with DNA: ${sha1(
-              newDna
-            )}`
-          );
+          // console.log(
+          //   `Created edition: ${abstractedIndexes[0]}, with DNA: ${sha1(
+          //     newDna
+          //   )}`
+          // );
         });
         dnaList.add(filterDNAOptions(newDna));
         editionCount++;
