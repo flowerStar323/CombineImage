@@ -296,9 +296,8 @@ const createDna = (_layers) => {
             if (layer.name == "mouth") {
               for (var j = 0; j < layer.elements.length; j++) {
                 if (layer.elements[j].name = "NORMAL") {
-                  console.log("12345");
                   randNum.push(
-                    `${layer.elements[i].id}:${layer.elements[i].filename}${layer.bypassDNA ? "?bypassDNA=true" : ""
+                    `${layer.elements[j].id}:${layer.elements[j].filename}${layer.bypassDNA ? "?bypassDNA=true" : ""
                     }`
                   );
                 }
