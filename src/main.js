@@ -331,7 +331,6 @@ const createDna = (_layers) => {
     let newrandom = [];
     newrandom = randNum.filter(e => !e.includes(':GOLD TOKEN'));
     var numm = randomIntGenerate();
-    console.log(numm, normalArr[numm]);
     if (newrandom.length == 4) randNum[randNum.indexOf(newrandom[newrandom.length - 1])] = normalArr[numm];
   }
 
