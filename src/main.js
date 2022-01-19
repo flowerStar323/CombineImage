@@ -283,7 +283,7 @@ const isDnaUnique = (_DnaList = new Set(), _dna = "") => {
   const _filteredDNA = filterDNAOptions(_dna);
   return !_DnaList.has(_filteredDNA);
 };
-const randomIntGenerate = (min = 1, max = 10) => { // min and max included 
+const randomIntGenerate = (min = 0, max = 9) => { // min and max included 
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 const createDna = (_layers) => {
@@ -330,10 +330,9 @@ const createDna = (_layers) => {
   if (randNum.length > 10) {
     let newrandom = [];
     newrandom = randNum.filter(e => !e.includes(':GOLD TOKEN'));
-    console.log(randNum.slice(100));
-    if (newrandom.length == 4) randNum[randNum.indexOf(newrandom[newrandom.length - 1])] = normalArr[randomIntGenerate()];
-    console.log(randomIntGenerate());
-    // console.log(randNum.filter(e => !e.includes(':GOLD TOKEN') && e.includes('DIAMOND')));
+    var numm = randomIntGenerate();
+    console.log(numm, normalArr[numm]);
+    if (newrandom.length == 4) randNum[randNum.indexOf(newrandom[newrandom.length - 1])] = normalArr[numm];
   }
 
   return randNum.join(DNA_DELIMITER);
