@@ -28,6 +28,18 @@ ctx.imageSmoothingEnabled = format.smoothing;
 var metadataList = [];
 var attributesList = [];
 var dnaList = new Set();
+const normalArr = [
+  '60:NORMAL #B#4.89048904890489.png',
+  '61:NORMAL #C#4.5004500450045.png',
+  '62:NORMAL #E#4.5004500450045.png',
+  '63:NORMAL #G#4.5004500450045.png',
+  '64:NORMAL #L#4.5004500450045.png',
+  '65:NORMAL #O#5.7005700570057.png',
+  '66:NORMAL #P#4.5004500450045.png',
+  '67:NORMAL #R#5.1005100510051.png',
+  '68:NORMAL #S#4.5004500450045.png',
+  '69:NORMAL #V#4.5004500450045.png',
+];
 const DNA_DELIMITER = "-";
 const HashlipsGiffer = require(`${basePath}/modules/HashlipsGiffer.js`);
 
@@ -271,7 +283,9 @@ const isDnaUnique = (_DnaList = new Set(), _dna = "") => {
   const _filteredDNA = filterDNAOptions(_dna);
   return !_DnaList.has(_filteredDNA);
 };
-
+const randomIntGenerate = (min = 1, max = 10) => { // min and max included 
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
 const createDna = (_layers) => {
   let randNum = [];
   _layers.forEach((layer) => {
@@ -291,13 +305,14 @@ const createDna = (_layers) => {
             flag = 1;
           }
         }
+        console.log(flag);
         if (flag == 1) {
           _layers.forEach((layer) => {
             if (layer.name == "mouth") {
               for (var j = 0; j < layer.elements.length; j++) {
                 if (layer.elements[j].name = "NORMAL") {
                   randNum.push(
-                    `${layer.elements[j].id}:${layer.elements[j].filename}${layer.bypassDNA ? "?bypassDNA=true" : ""
+                    `${layer.elements[i].id}:${layer.elements[i].filename}${layer.bypassDNA ? "?bypassDNA=true" : ""
                     }`
                   );
                 }
@@ -306,20 +321,21 @@ const createDna = (_layers) => {
           });
         } else {
           randNum.push(
-            `${layer.elements[i].id}:${layer.elements[i].filename}${layer.bypassDNA ? "?bypassDNA=true" : ""
-            }`
+            `${layer.elements[i].id}:${layer.elements[i].filename}${layer.bypassDNA ? "?bypassDNA=true" : ""}`
           );
         }
-        // randNum.push(
-        //   `${layer.elements[i].id}:${layer.elements[i].filename}${layer.bypassDNA ? "?bypassDNA=true" : ""
-        //   }`
-        // );
         return randNum;
       }
     }
   });
+  if (randNum.length > 10) {
+    var num = randomIntGenerate();
 
-  return randNum.join(DNA_DELIMITER); ``
+    let newrandom = randNum.filter(e => !e.includes(':GOLD TOKEN'));
+    randNum[randNum.indexOf(newrandom[newrandom.length - 1])] = normalArr[num];
+  }
+
+  return randNum.join(DNA_DELIMITER);
 };
 
 const writeMetaData = (_data) => {
@@ -379,7 +395,6 @@ const startCreating = async () => {
       editionCount <= layerConfigurations[layerConfigIndex].growEditionSizeTo
     ) {
       let newDna = createDna(layers);
-      // console.log(222, newDna);
 
       if (isDnaUnique(dnaList, newDna)) {
         let results = constructLayerToDna(newDna, layers);
